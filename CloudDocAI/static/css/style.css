@@ -1,0 +1,395 @@
+/*
+   Modern Minimal Dark Theme
+*/
+
+:root{
+
+    --bg:#0b1220;
+    --surface:#162033;
+    --surface-light:#1d2940;
+    --border:#2d3b55;
+
+    --text:#f8fafc;
+    --text-light:#a8b3c7;
+
+    --primary:#3b82f6;
+    --primary-hover:#2563eb;
+
+    --success:#16a34a;
+    --danger:#dc3545;
+
+    --radius:14px;
+
+}
+
+/* Base */
+
+body{
+
+    background:var(--bg);
+    color:var(--text);
+
+    font-family:
+        "Inter",
+        "Segoe UI",
+        sans-serif;
+
+}
+
+.container{
+
+    max-width:1280px;
+
+}
+
+h1,h2,h3{
+
+    font-weight:700;
+
+}
+
+/* Navbar */
+
+.navbar{
+
+    background:#101827 !important;
+
+    border-bottom:1px solid var(--border);
+
+    margin-bottom:40px;
+
+}
+
+.navbar-brand{
+
+    color:white !important;
+
+    font-weight:700;
+
+    font-size:1.5rem;
+
+}
+
+/* Cards */
+
+.card{
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    overflow:hidden;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.18);
+
+}
+
+.card-header{
+
+    background:transparent;
+
+    border-bottom:1px solid var(--border);
+
+    color:white;
+
+    font-size:1.15rem;
+
+    font-weight:600;
+
+    padding:18px 22px;
+
+}
+
+.card-body{
+
+    padding:22px;
+
+}
+
+/* Inputs */
+
+.form-control{
+
+    background:#0f172a;
+
+    color:white;
+
+    border:1px solid var(--border);
+
+}
+
+.form-control:focus{
+
+    background:#0f172a;
+
+    color:white;
+
+    border-color:var(--primary);
+
+    box-shadow:none;
+
+}
+
+.form-control::placeholder{
+
+    color:#8ea0b9;
+
+}
+
+/* Buttons */
+
+.btn{
+
+    border:none;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    transition:.2s;
+
+}
+
+.btn-primary{
+
+    background:var(--primary);
+
+}
+
+.btn-primary:hover{
+
+    background:var(--primary-hover);
+
+}
+
+.btn-success{
+
+    background:var(--success);
+
+}
+
+.btn-danger{
+
+    background:var(--danger);
+
+}
+
+.btn-secondary{
+
+    background:#475569;
+
+}
+
+/* Document List */
+
+/* We'll use this later */
+
+.document-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+}
+
+.document-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    padding:18px 22px;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    background:var(--surface-light);
+
+    transition:
+        background .2s,
+        border-color .2s,
+        transform .15s;
+
+    cursor:pointer;
+
+}
+
+.document-item:hover{
+
+    border-color:var(--primary);
+
+    background:#22304b;
+
+    transform:translateY(-2px);
+
+}
+
+.document-info{
+
+    flex:1;
+
+}
+
+.document-name{
+
+    font-size:17px;
+
+    font-weight:600;
+
+    color:white;
+
+}
+
+.document-meta{
+
+    font-size:13px;
+
+    color:var(--text-light);
+
+    margin-top:4px;
+
+}
+
+/* Action Toolbar */
+
+.action-bar{
+
+    display:flex;
+
+    gap:15px;
+
+    margin-top:24px;
+
+}
+
+.action-bar .btn{
+
+    flex:1;
+
+}
+
+/* AI Output */
+
+.ai-output{
+
+    background:#101827;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    padding:22px;
+
+    color:var(--text-light);
+
+    min-height:220px;
+
+    line-height:1.7;
+
+}
+
+.document-radio{
+
+    width:18px;
+
+    height:18px;
+
+    cursor:pointer;
+
+    flex-shrink:0;
+
+}
+
+.document-item.selected{
+
+    border:1px solid var(--primary);
+
+    background:#22304b;
+
+    box-shadow:
+        0 0 0 2px rgba(59,130,246,.15);
+
+}
+
+.action-bar .btn.disabled{
+    opacity:.5;
+    pointer-events:none;
+}
+
+#selectedFile{
+    font-size:16px;
+    font-weight:600;
+}
+
+.document-name::before{
+    content:"📄";
+    margin-right:10px;
+}
+
+label{
+    color: var(--text);
+    font-weight: 500;
+}
+
+h2{
+    color: var(--text);
+}
+
+.form-control,
+.form-control:focus{
+
+    background:#0f172a !important;
+
+    color:var(--text) !important;
+
+}
+
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover,
+.form-control:-webkit-autofill:focus{
+
+    -webkit-text-fill-color: white;
+
+    -webkit-box-shadow: 0 0 0px 1000px #0f172a inset;
+
+    transition: background-color 9999s;
+
+}
+
+.card-body form{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+
+.summary-box {
+    width: 100%;
+    background: #1b263b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 18px;
+    color: #f8fafc;
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+.summary-box pre {
+    background: transparent;
+    border: none;
+    color: #f8fafc;
+    margin: 0;
+    padding: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+}

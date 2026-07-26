@@ -1,0 +1,275 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | CloudDocAI{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">Dashboard</h2>
+
+<div class="row g-4">
+
+    <!-- Upload Card -->
+    <div class="col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-header">
+                Upload Document
+            </div>
+
+            <div class="card-body">
+
+                <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+
+                    <div class="mb-3">
+                        <input
+                            type="file"
+                            name="document"
+                            class="form-control"
+                            required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        Upload Document
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Search Card -->
+    <div class="col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-header">
+                Search Documents
+            </div>
+
+            <div class="card-body d-flex align-items-center">
+
+                <form method="GET" action="{{ url_for('dashboard') }}" class="w-100">
+
+                    <div class="input-group">
+
+                        <input
+                            type="text"
+                            name="search"
+                            class="form-control"
+                            placeholder="Search documents..."
+                            value="{{ request.args.get('search', '') }}">
+
+                        <button class="btn btn-primary" type="submit">
+                            Search
+                        </button>
+
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
+                            Clear
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card mt-4">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <span>Uploaded Documents</span>
+
+        <span class="text-secondary">
+            {{ documents|length }} File{% if documents|length != 1 %}s{% endif %}
+        </span>
+
+    </div>
+
+    <div class="card-body">
+    <form id="documentForm" method="POST">
+
+        <div class="document-list">
+
+            {% for document in documents %}
+
+            <label class="document-item">
+
+                <input
+                    class="document-checkbox"
+                    type="checkbox"
+                    name="document_ids"
+                    value="{{ document.id }}">
+
+                <div class="document-info">
+
+                    <div class="document-name">
+                        {{ document.filename }}
+                    </div>
+
+                    <div class="document-meta">
+                        {{ document.file_type }}
+                        •
+                        {{ document.formatted_size }}
+                        •
+                        {{ document.upload_date }}
+                    </div>
+
+                </div>
+
+            </label>
+
+            {% else %}
+
+            <div class="text-center text-secondary py-5">
+
+                No documents uploaded yet.
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <hr class="my-4">
+
+        <div id="selectedFile" class="mb-3 text-secondary">
+
+            No document selected.
+
+        </div>
+
+        <div class="action-bar">
+
+            <button
+                type="submit"
+                formaction="{{ url_for('download') }}"
+                id="downloadBtn"
+                class="btn btn-success"
+                disabled>
+
+                📥 Download
+
+            </button>
+
+            <button
+                type="submit"
+                formaction="{{ url_for('delete') }}"
+                id="deleteBtn"
+                class="btn btn-danger"
+                disabled>
+
+                🗑 Delete
+
+            </button>
+
+            <button
+                type="submit"
+                formaction="{{ url_for('summarize') }}"
+                id="summarizeBtn"
+                class="btn btn-primary"
+                disabled>
+
+                🤖 Summarize
+
+            </button>
+
+        </div>
+        </form>
+    </div>
+
+</div>
+
+<div class="card mt-4">
+
+    <div class="card-header">
+
+        AI Analysis
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="ai-output" id="aiOutput">
+
+            {% if summary %}
+
+                <div class="summary-box">
+                    <pre>{{ summary }}</pre>
+                </div>
+
+            {% else %}
+
+                <p class="text-secondary mb-0">
+                    Select one or more documents and click <strong>Summarize</strong> to generate an AI summary.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const checkboxes = document.querySelectorAll(".document-checkbox");
+
+const selectedFile = document.getElementById("selectedFile");
+const downloadBtn = document.getElementById("downloadBtn");
+const deleteBtn = document.getElementById("deleteBtn");
+const summarizeBtn = document.getElementById("summarizeBtn");
+
+function updateSelection(){
+
+    const selected = document.querySelectorAll(".document-checkbox:checked");
+
+    document.querySelectorAll(".document-item").forEach(card=>{
+        card.classList.remove("selected");
+    });
+
+    selected.forEach(box=>{
+        box.closest(".document-item").classList.add("selected");
+    });
+
+    const count = selected.length;
+
+    if(count===0){
+
+        selectedFile.textContent="No document selected.";
+
+        downloadBtn.disabled=true;
+        deleteBtn.disabled=true;
+        summarizeBtn.disabled=true;
+
+    }
+
+    else{
+
+        selectedFile.textContent=`${count} document(s) selected`;
+
+        downloadBtn.disabled=false;
+        deleteBtn.disabled=false;
+        summarizeBtn.disabled=false;
+
+    }
+
+}
+
+checkboxes.forEach(box=>{
+    box.addEventListener("change", updateSelection);
+});
+
+</script>
+
+{% endblock %}
