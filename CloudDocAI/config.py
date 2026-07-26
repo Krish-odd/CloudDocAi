@@ -24,4 +24,4 @@ ALLOWED_EXTENSIONS = {
 }
 
 # Groq API Key
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY", "API-KEY")
